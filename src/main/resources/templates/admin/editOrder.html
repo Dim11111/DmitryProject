@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение статуса заказа</title>
+    <form th:method="POST" th:action="@{/admin/order/edit/{id}(id=${order.getId()})}" th:object="${order}">
+        <label for="status">Введите наименование</label>
+        <input type="text" th:field="*{status}" placeholder="Статус" id="status">
+        <br>
+        <input type="submit" value="Редактировать">
+    </form>
+</head>
+<body>
+
+</body>
+</html>
