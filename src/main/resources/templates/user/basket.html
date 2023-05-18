@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваша корзина</title>
+</head>
+<body>
+<h1>Ваша корзина</h1>
+<div th:each = "element : ${basket_tour}">
+  <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+  <br>
+  <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+  <p th:text="'Цена: ' + ${element.getPrice()}"></p>
+  <a th:href="@{/basket/delete/{id}(id=${element.getId()})}">Удалить тур из выбора</a>
+</div>
+<h3 th:text="'Итоговая сумма: ' + ${price}"></h3>
+<a href="/order/create">Оформить тур</a>
+</body>
+</html>

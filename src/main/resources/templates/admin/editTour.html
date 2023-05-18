@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование товара</title>
+</head>
+<body>
+<h3>Редактирование товара</h3>
+<form th:method="POST" th:action="@{/admin/tour/edit/{id}(id=${tour.getId()})}" th:object="${tour}" enctype="multipart/form-data">
+    <label for="title">Введите наименование</label>
+    <input type="text" th:field="*{title}" placeholder="Наименование" id="title">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    <br>
+    <br>
+    <label for="price">Введите цену</label>
+    <input type="text" th:field="*{price}" placeholder="Цена" id="price">
+    <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br>
+    <br>
+    <label for="description">Добавьте описание</label>
+    <textarea th:field="*{description}" placeholder="Описание" id="description"></textarea>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <br>
+    <br>
+    <label for="agency">Введите туроператора</label>
+    <input type="text" th:field="*{agency}" placeholder="Туроператор" id="agency">
+    <div style="color:red" th:if="${#fields.hasErrors('agency')}" th:errors="*{agency}"></div>
+    <br>
+    <br>
+    <label for="location">Выберите направление тура</label>
+    <select name="location" th:field="*{location}" id="location">
+        <div th:each="element: ${location}">
+            <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
+        </div>
+        <div style="color:red" th:if="${#fields.hasErrors('location')}" th:error="*{location}"></div>
+    </select>
+    <br>
+    <br>
+    <input type="submit" value="Редактировать">
+</form>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров</title>
+</head>
+<body>
+<h1>Добро пожаловать!</h1>
+<h3>Найти свой тур</h3>
+<form th:method="POST" th:action="@{/guest/search}">
+    <fieldset>
+        <legend>Выберите параметры своего тура</legend>
+        <br>
+        <label for="search">Поиск по наименованию: </label>
+        <input type="text" id="search" name="search" th:value="*{value_search}">
+        <br>
+        <p>Цена: </p>
+        <label for="on">От</label>
+        <input type="text" id="on" name="on" th:value="*{value_price_on}">
+        <label for="off">До</label>
+        <input type="text" id="off" name="off" th:value="*{value_price_off}">
+        <br>
+        <br>
+        <div>
+            <label for="ascending_price">Упорядочить по возрастанию цены</label>
+            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+            <label for="descending_price">Упорядочить по убыванию цены</label>
+            <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+            <p>Направление путешествия: </p>
+            <label for="altai">Алтай</label>
+            <input type="radio" id="altai" name="location" value="altai">
+            <label for="karelia">Карелия</label>
+            <input type="radio" id="karelia" name="location" value="karelia">
+            <label for="crimea">Крым</label>
+            <input type="radio" id="crimea" name="location" value="crimea">
+            <br>
+            <br>
+            <input type="submit" value="Найти">
+        </div>
+    </fieldset>
+</form>
+<hr>
+<h3>Результат поиска: </h3>
+<div th:each="element : ${search_product}">
+    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <p th:text="'Наименование: ' + ${element.getTitle()}"></p>
+    <br>
+    <a th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${element.getPrice()}"></p>
+    <hr>
+</div>
+<hr>
+
+<h3>Доступные туры: </h3>
+<div th:each="element : ${tours}">
+    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <p th:text="'Наименование: ' + ${element.getTitle()}"></p>
+    <br>
+    <a th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${element.getPrice()}"></p>
+    <hr>
+</div>
+<hr>
+
+</body>
+</html>
