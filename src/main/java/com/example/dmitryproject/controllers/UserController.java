@@ -74,7 +74,7 @@ public class UserController {
                 return "/registration";
             }
             personService.register(person);
-            return "/user/user";
+            return "user/user";
         }
 
         @GetMapping("/user/tours")

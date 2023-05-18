@@ -13,6 +13,7 @@
 <a href="admin/tour/add">Добавление тура</a>
 <hr>
 <div th:each="product : ${tours}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
     <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
     <p th:text="'Описание: ' + ${product.getDescription()}"></p>
@@ -21,6 +22,18 @@
     <a th:href="@{/admin/tour/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
     <a th:href="@{/admin/tour/delete/{id}(id=${product.getId()})}">Удаление товара</a>
 
+</div>
+<hr>
+<h3>Список заказов: </h3>
+<div th:each="element : ${orders}">
+    <p th:text="'Id заказа: ' + ${element.getId()}"></p>
+    <p th:text="'Номер заказа: ' + ${element.getNumber()}"></p>
+    <p th:text="'Наименование тура: ' + ${element.getTour().getTitle()}"></p>
+    <p th:text="'Сумма заказа: ' + ${element.getPrice()}"></p>
+    <p th:text="'Статус заказа: ' + ${element.getStatus()}"></p>
+    <p th:text="'Имя пользователя: ' + ${element.getPerson().getLogin()}"></p>
+    <br>
+    <br>
 </div>
 <hr>
 </body>

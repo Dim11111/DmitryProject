@@ -2,8 +2,10 @@ package com.example.dmitryproject.controllers;
 
 import com.example.dmitryproject.models.Image;
 import com.example.dmitryproject.models.Location;
+import com.example.dmitryproject.models.Order;
 import com.example.dmitryproject.models.Tour;
 import com.example.dmitryproject.repositories.LocationRepository;
+import com.example.dmitryproject.repositories.OrderRepository;
 import com.example.dmitryproject.services.TourService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -22,18 +25,25 @@ public class AdminController {
     private final TourService tourService;
     private final LocationRepository locationRepository;
 
+    private final OrderRepository orderRepository;
+
+
+
     @Value("${upload.path}")
     private String uploadPath;
 
 
-    public AdminController(TourService tourService, LocationRepository locationRepository) {
+    public AdminController(TourService tourService, LocationRepository locationRepository, OrderRepository orderRepository) {
         this.tourService = tourService;
         this.locationRepository = locationRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/admin") //это в адресной строке
     public String admin(Model model){
         model.addAttribute("tours", tourService.infoAllTours());
+        List<Order> orderList = orderRepository.findAll();
+        model.addAttribute("orders", orderList);
         return "/admin/admin"; //это адрес формы
     }
     @GetMapping("/admin/tour/add")
@@ -113,6 +123,17 @@ public class AdminController {
     @GetMapping("/admin/tour/delete/{id}")
     public String deleteTour(@PathVariable("id")int id){
         tourService.deleteTour(id);
+        return "redirect:/admin";
+    }
+    @GetMapping("/admin/order/edit/{id}")
+    public String editOrder(@PathVariable("id") int id, Model model){
+        model.addAttribute("order", tourService.infoOrder(id));
+        return "admin/editOrder";
+    }
+
+    @PostMapping("/admin/order/edit/{id}")
+    public String editOrder(@ModelAttribute("order") Order order, @PathVariable("id") int id, Model model){
+        tourService.editOrder(id, order);
         return "redirect:/admin";
     }
 

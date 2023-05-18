@@ -12,7 +12,11 @@
 <p th:text="'Туроператор: ' + ${tour.getAgency()}"></p>
 <p th:text="'Направление: ' + ${tour.getLocation().getName()}"></p>
 <div th:each="img : ${tour.getImageList()}">
-  <img th:src="'/img/' + ${img.getFileName()}">
+  <img width="600px" height="450px" th:src="'/img/' + ${img.getFileName()}">
 </div>
+<hr>
+  <a th:href="@{/basket/add/{id}(id=${tour.getId()})}">Выбрать этот тур</a>
+<br>
+<a href="/user">Возврат к списку туров</a>
 </body>
 </html>

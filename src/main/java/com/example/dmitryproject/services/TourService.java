@@ -1,7 +1,10 @@
 package com.example.dmitryproject.services;
 
+import com.example.dmitryproject.enumm.Status;
 import com.example.dmitryproject.models.Location;
+import com.example.dmitryproject.models.Order;
 import com.example.dmitryproject.models.Tour;
+import com.example.dmitryproject.repositories.OrderRepository;
 import com.example.dmitryproject.repositories.TourRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +17,11 @@ import java.util.Optional;
 public class TourService {
     private final TourRepository tourRepository;
 
-    public TourService(TourRepository tourRepository) {
+    private final OrderRepository orderRepository;
+
+    public TourService(TourRepository tourRepository, OrderRepository orderRepository) {
         this.tourRepository = tourRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<Tour> infoAllTours(){
@@ -39,7 +45,19 @@ public class TourService {
     }
 
     @Transactional
+    public void editOrder(int id, Order order){
+        order.setId(id);
+        order.setStatus(Status.valueOf("Оформлен"));
+        orderRepository.save(order);
+    }
+
+    @Transactional
     public void deleteTour(int id){
         tourRepository.deleteById(id);
+    }
+
+    public Order infoOrder(int id) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+        return optionalOrder.orElse(null);
     }
 }
