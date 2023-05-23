@@ -5,6 +5,8 @@
     <title>Редактирование товара</title>
 </head>
 <body>
+<a href="/admin">Главная страница</a>
+<hr>
 <h3>Редактирование товара</h3>
 <form th:method="POST" th:action="@{/admin/tour/edit/{id}(id=${tour.getId()})}" th:object="${tour}" enctype="multipart/form-data">
     <label for="title">Введите наименование</label>

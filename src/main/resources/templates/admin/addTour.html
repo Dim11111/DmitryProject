@@ -5,6 +5,8 @@
     <title>Добавление товара</title>
 </head>
 <body>
+<a href="/admin">Главная страница</a>
+<hr>
 <h3>Добавление нового товара</h3>
 <form th:method="POST" th:action="@{/admin/tour/add}" th:object="${tour}" enctype="multipart/form-data">
     <label for="title">Введите наименование</label>

@@ -18,8 +18,9 @@
 <form method="get" th:action="@{/orders}">
     <input type="submit" value="Заказы">
 </form>
-<h1>Личный кабинет</h1>
+<h3>Ваш личный кабинет</h3>
 <h3>Найти свой тур: </h3>
+<!--В name указываем имя, по которому контроллер будет принимать введенные значения с поля-->
 <form th:method="POST" th:action="@{/user/search}">
     <fieldset>
         <legend>Выберите параметры своего тура</legend>
@@ -35,17 +36,18 @@
         <br>
         <br>
         <div>
-            <label for="ascending_price">Упорядочить по возрастанию цены</label>
+            <!--  Отправляем по ключу value полученное с формы значение на контроллер и обрабатываем его там-->
             <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
-            <label for="descending_price">Упорядочить по убыванию цены</label>
+            <label for="ascending_price">Упорядочить по возрастанию цены</label>
             <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+            <label for="descending_price">Упорядочить по убыванию цены</label>
             <p>Направление путешествия: </p>
+            <input type="radio" id="altai" name="location" value="Altai">
             <label for="altai">Алтай</label>
-            <input type="radio" id="altai" name="location" value="altai">
+            <input type="radio" id="karelia" name="location" value="Karelia">
             <label for="karelia">Карелия</label>
-            <input type="radio" id="karelia" name="location" value="karelia">
+            <input type="radio" id="crimea" name="location" value="Crimea">
             <label for="crimea">Крым</label>
-            <input type="radio" id="crimea" name="location" value="crimea">
             <br>
             <br>
             <input type="submit" value="Найти">
@@ -55,7 +57,11 @@
 <hr>
 
 <h3>Результат поиска: </h3>
+<!--Тут мы принимаем {search_product}, который приходит к нам из метода productSearch продуктКонтроллера, который обрабатывает поисковый запрос-->
 <div th:each="element : ${search_product}">
+    <!--Изображение по ссылке /img/названиеФото, где заместо /img/ подставиться значение, указанное в классе Config
+        (там указано, что если встречается путь "/img/, то вместо него подставляем "file:///"+uploadPath+"/",
+        а после слэша будет название первой фотографии в листе фотографий данного товара-->
     <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
     <br>
     <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Карточка пользователя</title>
+</head>
+<body>
+<h3>Карточка пользователя</h3>
+<p th:text="${person.getId()}"></p>
+<p th:text="${person.getLogin()}"></p>
+<form method="post" th:action="@{/admin/person/edit/{id}(id=${person.getId()})}" th:object="${person}">
+  <label for="roles">Изменить роль пользователя: </label>
+  <select name="roles" th:field="*{role}" id="roles">
+<!--    <div th:each="role:${roles}">-->
+<!--      <option th:text="${role}" th:value="${role}"></option>-->
+<!--    </div>-->
+  </select>
+
+  <button type="submit">Изменить</button>
+
+</form>
+</body>
+</html>

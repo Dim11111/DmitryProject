@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Личный кабинет администратора</title>
+    <title>Главная страница администратора</title>
 </head>
 <body>
 <h3>Личный кабинет администратора</h3>
@@ -10,8 +10,13 @@
     <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.token}">
     <button type="submit">Выйти из личного кабинета</button>
 </form>
-<a href="admin/tour/add">Добавление тура</a>
+<a href="/admin/tour/add">Добавление тура</a>
+<br>
+<a href="/admin/orders">Список заказов</a>
+<br>
+<br>
 <hr>
+<br>
 <div th:each="product : ${tours}">
     <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
     <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
@@ -21,9 +26,11 @@
     <p th:text="'Направление: ' + ${product.getLocation().getName()}"></p>
     <a th:href="@{/admin/tour/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
     <a th:href="@{/admin/tour/delete/{id}(id=${product.getId()})}">Удаление товара</a>
-
+    <br>
+    <br>
+    <hr>
 </div>
-<hr>
+
 <h3>Список заказов: </h3>
 <div th:each="element : ${orders}">
     <p th:text="'Id заказа: ' + ${element.getId()}"></p>
@@ -32,7 +39,6 @@
     <p th:text="'Сумма заказа: ' + ${element.getPrice()}"></p>
     <p th:text="'Статус заказа: ' + ${element.getStatus()}"></p>
     <p th:text="'Имя пользователя: ' + ${element.getPerson().getLogin()}"></p>
-    <br>
     <br>
 </div>
 <hr>

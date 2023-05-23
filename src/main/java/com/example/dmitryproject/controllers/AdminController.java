@@ -1,11 +1,12 @@
 package com.example.dmitryproject.controllers;
 
-import com.example.dmitryproject.models.Image;
-import com.example.dmitryproject.models.Location;
-import com.example.dmitryproject.models.Order;
-import com.example.dmitryproject.models.Tour;
+import com.example.dmitryproject.enumm.Role;
+import com.example.dmitryproject.enumm.Status;
+import com.example.dmitryproject.models.*;
 import com.example.dmitryproject.repositories.LocationRepository;
 import com.example.dmitryproject.repositories.OrderRepository;
+import com.example.dmitryproject.services.OrderService;
+import com.example.dmitryproject.services.PersonService;
 import com.example.dmitryproject.services.TourService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,9 @@ public class AdminController {
     private final LocationRepository locationRepository;
 
     private final OrderRepository orderRepository;
+    private final OrderService orderService;
+
+    private final PersonService personService;
 
 
 
@@ -33,10 +37,12 @@ public class AdminController {
     private String uploadPath;
 
 
-    public AdminController(TourService tourService, LocationRepository locationRepository, OrderRepository orderRepository) {
+    public AdminController(TourService tourService, LocationRepository locationRepository, OrderRepository orderRepository, OrderService orderService, PersonService personService) {
         this.tourService = tourService;
         this.locationRepository = locationRepository;
         this.orderRepository = orderRepository;
+        this.orderService = orderService;
+        this.personService = personService;
     }
 
     @GetMapping("/admin") //это в адресной строке
@@ -44,7 +50,7 @@ public class AdminController {
         model.addAttribute("tours", tourService.infoAllTours());
         List<Order> orderList = orderRepository.findAll();
         model.addAttribute("orders", orderList);
-        return "/admin/admin"; //это адрес формы
+        return "admin/admin"; //это адрес формы
     }
     @GetMapping("/admin/tour/add")
     public String addTour(Model model){
@@ -125,16 +131,70 @@ public class AdminController {
         tourService.deleteTour(id);
         return "redirect:/admin";
     }
+
+    @GetMapping("/admin/orders")
+    public String getAllOrders(Model model){
+        model.addAttribute("orders", orderService.getAllOrders());
+        return "admin/allOrders";
+    }
+
     @GetMapping("/admin/order/edit/{id}")
     public String editOrder(@PathVariable("id") int id, Model model){
-        model.addAttribute("order", tourService.infoOrder(id));
+        model.addAttribute("order", orderService.infoOrder(id));
+        model.addAttribute("status", Status.values());
         return "admin/editOrder";
     }
 
+//    @PostMapping("/admin/order/edit/{id}")
+//    public String editOrder(@ModelAttribute("order") Order order, @ModelAttribute("status") Status status, @PathVariable("id") int id, Model model){
+//        order.setStatus(status);
+//        System.out.println(order.getId());
+//        System.out.println(order.getNumber());
+//        System.out.println(order.getTour());
+//        System.out.println(order.getPerson());
+//        System.out.println(order.getCount());
+//        System.out.println(order.getPrice());
+//        System.out.println(order.getStatus());
+//        orderService.editOrder(id, order);
+//        return "admin/admin";
+//    }
+
     @PostMapping("/admin/order/edit/{id}")
-    public String editOrder(@ModelAttribute("order") Order order, @PathVariable("id") int id, Model model){
-        tourService.editOrder(id, order);
+    public String editOrder(@ModelAttribute("status") Status status, @PathVariable("id") int id) {
+        Order order = orderService.infoOrder(id); //снова получаем объект заказа из БД
+        order.setStatus(status); //меняем статус на выбранный в селекте
+        orderService.editOrder(id, order); //сохраняем изменения в базу данных
         return "redirect:/admin";
     }
 
+    @GetMapping("/admin/persons")
+    public String getAllUsers(Model model){
+        model.addAttribute("persons", personService.getAllPerson());
+        return "/admin/allPerson";
+    }
+
+    @GetMapping("/admin/person/edit/{id}")
+    public String editPerson(@PathVariable("id") int id, Model model){
+        model.addAttribute("person", personService.infoPerson(id));
+        model.addAttribute("roles", Role.values());
+        return "/admin/editPerson";
+    }
+
+    @PostMapping("/admin/person/edit/{id}")
+    public String editPerson(@PathVariable("id")int id, @ModelAttribute("role") String role){
+        Person person = personService.infoPerson(id);
+        person.setRole(role);
+        personService.editPerson(id, person);
+        return "redirect:/admin/persons";
+    }
+
+    @PostMapping("/admin/orders/search")
+    public String searchOrders(@RequestParam("search") String search, Model model){
+        model.addAttribute("orders", orderService.getAllOrders());
+        model.addAttribute("search_orders", orderRepository.findOrderByNumberIgnoreCase(search));
+        //Кладём в модель обратно полученные значения с формы для того, чтобы после отправки формы (произойдёт перезагрузка
+        // страницы) отправить в инпут ранее введённое значение
+        model.addAttribute("value_search", search);
+        return "/admin/allOrders";
+    }
 }

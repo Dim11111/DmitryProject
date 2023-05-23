@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список зарегистрированных пользователей</title>
+</head>
+<body>
+<h3>Список зарегистрированных пользователей</h3>
+<div th:each="element: ${persons}">
+    <a th:href="@{/admin/person/edit/{id}(id=${element
+    .getId()})}" th:text="${element.getLogin()}"></a>
+    <p th:text="'ID пользователя: ' + ${element.getId()}"></p>
+    <p th:text="'Роль пользователя: ' + ${element.getRole()}"></p>
+    <hr>
+</div>
+</body>
+</html>

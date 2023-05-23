@@ -45,19 +45,8 @@ public class TourService {
     }
 
     @Transactional
-    public void editOrder(int id, Order order){
-        order.setId(id);
-        order.setStatus(Status.valueOf("Оформлен"));
-        orderRepository.save(order);
-    }
-
-    @Transactional
     public void deleteTour(int id){
         tourRepository.deleteById(id);
     }
 
-    public Order infoOrder(int id) {
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-        return optionalOrder.orElse(null);
-    }
 }

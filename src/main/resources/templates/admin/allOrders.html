@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все заказы</title>
+</head>
+<body>
+<a href="/admin">Главная страница</a>
+
+<!--th:action - указываем, при обращении на какой URL-адрес будет обработана наша страница (этот адрес д.б. у соответствующего контролера)
+В name указываем имя, по которому контроллер будет принимать введенные значения с поля - @RequestParam("search")-->
+<h3>Строка поиска заказов:</h3>
+<form th:method="post" th:action="@{/admin/orders/search}">
+  <label for="search"></label>
+  <input type="text" name="search" th:value="*{value_search}" id="search">
+  <input type="submit" value="Искать">
+  <br>
+</form>
+
+<h3>Результат поиска:</h3>
+<!--Тут мы принимаем {search_order}, который приходит к нам из метода AdminКонтроллера, который обрабатывает поисковый запрос-->
+<div th:each="element: ${search_orders}">
+  <a th:href="@{/admin/order/edit/{id}(id=${element.getId()})}" th:text="${element.getNumber()}"></a>
+</div>
+<hr>
+
+
+<h3>Все заказы магазина:</h3>
+  <div th:each="element : ${orders}">
+    <p th:text="'Id заказа: ' + ${element.getId()}"></p>
+    <a th:href="@{/admin/order/edit/{id}(id=${element.getId()})}" th:text="${element.getNumber()}"></a>
+    <p th:text="'Номер заказа: ' + ${element.getNumber()}"></p>
+    <p th:text="'Наименование тура: ' + ${element.getTour().getTitle()}"></p>
+    <p th:text="'Сумма заказа: ' + ${element.getPrice()}"></p>
+    <p th:text="'Статус заказа: ' + ${element.getStatus()}"></p>
+    <p th:text="'Имя пользователя: ' + ${element.getPerson().getLogin()}"></p>
+    <br>
+    <br>
+  </div>
+</body>
+</html>

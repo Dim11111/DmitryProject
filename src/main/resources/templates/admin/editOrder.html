@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Изменение статуса заказа</title>
-    <form th:method="POST" th:action="@{/admin/order/edit/{id}(id=${order.getId()})}" th:object="${order}">
-        <label for="status">Введите наименование</label>
-        <input type="text" th:field="*{status}" placeholder="Статус" id="status">
-        <br>
-        <input type="submit" value="Редактировать">
-    </form>
 </head>
 <body>
-
+<a href="/admin/orders">Список заказов</a>
+<br>
+<a href="/admin">Главная страница</a>
+<hr>
+<h3>Информация по заказу: </h3>
+<br>
+<form th:method="post" th:action="@{/admin/order/edit/{id}(id=${order.getId()})}" th:object="${order}">
+    <p th:text="'Id заказа: ' + ${order.getId()}"></p>
+    <p th:text="'Номер заказа: ' + ${order.getNumber()}"></p>
+    <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+    <p th:text="'Наименование тура: ' + ${order.getTour().getTitle()}"></p>
+    <p th:text="'Сумма заказа: ' + ${order.getPrice()}"></p>
+    <p th:text="'Статус заказа: ' + ${order.getStatus()}"></p>
+    <p th:text="'Имя пользователя: ' + ${order.getPerson().getLogin()}"></p>
+    <label for="status">Изменить статус заказа: </label>
+    <select name="status" th:field="*{status}" id="status">
+        <div th:each="element: ${status}">
+            <option th:text="${element}" th:value="${element}"></option>
+        </div>
+    </select>
+    <br>
+    <br>
+    <input type="submit" value="Редактировать">
+</form>
 </body>
 </html>
