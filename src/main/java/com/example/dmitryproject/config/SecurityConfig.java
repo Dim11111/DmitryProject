@@ -38,7 +38,7 @@ public class SecurityConfig {
                 // указываем что не аутентифицированные пользователя могут зайти на страницу аутентификации и на объект ошибки
                 // c помощью permitAll указываем что не аутентифицированные пользователи могут заходить на перечисленные страницы
                 // указываем что для всех остальных страниц необходимо вызывать метод authenticated(), который открывает форму аутентификации
-                .requestMatchers("/authentication", "/registration", "/error", "/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/tours", "/tour/info/{id}", "/guest/**", "/user/**", "/user", "/user/search", "/guest/search").permitAll()
+                .requestMatchers("/authentication", "/registration", "/error", "/resources/**", "/static/**", "/static/css/**", "/css/**", "/js/**", "/img/**", "/tours", "/tour/info/{id}", "/guest/**", "/user/**", "/user", "/user/search", "/guest/search").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and() // указываем что дальше настраиватеся аутентификация и соединяем ее с настройкой доступа
                 .formLogin().loginPage("/authentication") // указываем какой url запрос будет отправлятся при заходе на защищенные страницы

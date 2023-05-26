@@ -5,6 +5,7 @@
     <title>Ваша корзина</title>
 </head>
 <body>
+<a href="/user/tours">Возврат к списку туров</a>
 <h1>Ваша корзина</h1>
 <div th:each = "element : ${basket_tour}">
   <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
@@ -16,6 +17,5 @@
 <h3 th:text="'Итоговая сумма: ' + ${price}"></h3>
 <a href="/order/create">Оформить тур</a>
 <br>
-<a href="/user">Возврат к списку туров</a>
 </body>
 </html>

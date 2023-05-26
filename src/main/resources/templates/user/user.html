@@ -2,60 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport">
     <title>Главная страница пользователя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <style>
+        button{
+            margin-left: 15px;
+        }
+    </style>
 </head>
 <body>
-<h1>Главная страница</h1>
-<form method="post" th:action="@{/logout}">
-    <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.token}">
-    <button type="submit">Выйти из личного кабинета</button>
-</form>
-<br>
-<form method="get" th:action = "@{/basket}">
-    <button type="submit">Корзина</button>
-</form>
-<br>
-<form method="get" th:action="@{/orders}">
-    <input type="submit" value="Заказы">
-</form>
-<h3>Ваш личный кабинет</h3>
-<h3>Найти свой тур: </h3>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ТурON</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/3">Алтай</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/2">Карелия</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=/user/tour/1>Крым</a>
+                </li>
+            </ul>
+            <form method="get" th:action = "@{/basket}">
+                <button type="submit" class="btn btn-outline-primary">Корзина</button>
+            </form>
+
+            <form method="get" th:action="@{/orders}">
+                <button type="submit" class="btn btn-outline-info">Заказы</button>
+            </form>
+        </div>
+        <form method="post" th:action="@{/logout}">
+            <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.token}">
+            <button class="btn btn-primary" type="submit">Выйти</button>
+        </form>
+    </div>
+</nav>
+
 <!--В name указываем имя, по которому контроллер будет принимать введенные значения с поля-->
 <form th:method="POST" th:action="@{/user/search}">
     <fieldset>
-        <legend>Выберите параметры своего тура</legend>
+        <legend>Найдите тур мечты прямо сейчас: </legend>
         <br>
-        <label for="search">Поиск по наименованию: </label>
+        <label for="search">Найти по наименованию: </label>
         <input type="text" id="search" name="search" th:value="*{value_search}">
         <br>
-        <p>Цена: </p>
-        <label for="on">От</label>
+        <br>
+        <label for="on">Цена от</label>
         <input type="text" id="on" name="on" th:value="*{value_price_on}">
-        <label for="off">До</label>
+        <label for="off">до</label>
         <input type="text" id="off" name="off" th:value="*{value_price_off}">
         <br>
-        <br>
+
         <div>
             <!--  Отправляем по ключу value полученное с формы значение на контроллер и обрабатываем его там-->
             <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
-            <label for="ascending_price">Упорядочить по возрастанию цены</label>
+            <label for="ascending_price">по возрастанию</label>
             <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
-            <label for="descending_price">Упорядочить по убыванию цены</label>
-            <p>Направление путешествия: </p>
-            <input type="radio" id="altai" name="location" value="Altai">
+            <label for="descending_price">по убыванию (сортировка по цене)</label>
+            <br>
+            <input type="radio" id="altai" name="location" value="Алтай">
             <label for="altai">Алтай</label>
-            <input type="radio" id="karelia" name="location" value="Karelia">
+            <input type="radio" id="karelia" name="location" value="Карелия">
             <label for="karelia">Карелия</label>
-            <input type="radio" id="crimea" name="location" value="Crimea">
-            <label for="crimea">Крым</label>
+            <input type="radio" id="crimea" name="location" value="Крым">
+            <label for="crimea">Крым (выбор направления)</label>
+
             <br>
-            <br>
-            <input type="submit" value="Найти">
+            <button type="submit" class="btn btn-light">Найти</button>
+
         </div>
     </fieldset>
 </form>
 <hr>
-
+<div class="content">
 <h3>Результат поиска: </h3>
 <!--Тут мы принимаем {search_product}, который приходит к нам из метода productSearch продуктКонтроллера, который обрабатывает поисковый запрос-->
 <div th:each="element : ${search_product}">
@@ -70,15 +98,53 @@
 </div>
 <hr>
 
-<h3>Доступные туры</h3>
+<h3>Список туров:</h3>
 <div th:each="element : ${tours}">
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="400px">
     <br>
     <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+    <p th:text="${element.getDescription()}"></p>
     <p th:text="'Цена: ' + ${element.getPrice()}"></p>
     <a th:href="@{/basket/add/{id}(id=${element.getId()})}">Выбрать этот тур</a>
     <hr>
 </div>
-    <hr>
+</div>
+
+
+<footer class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="blue">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ТурON</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/3">Алтай</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/2">Карелия</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=/user/tour/1>Крым</a>
+                </li>
+            </ul>
+            <form method="get" th:action = "@{/basket}">
+                <button type="submit" class="btn btn-outline-primary">Корзина</button>
+            </form>
+
+            <form method="get" th:action="@{/orders}">
+                <button type="submit" class="btn btn-outline-info">Заказы</button>
+            </form>
+        </div>
+        <form method="post" th:action="@{/logout}">
+            <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.token}">
+            <button class="btn btn-primary" type="submit">Выйти</button>
+        </form>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>

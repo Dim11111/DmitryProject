@@ -5,14 +5,18 @@
   <title>Информация о туре</title>
 </head>
 <body>
+<a href="/guest/tours">Вернуться к списку товаров</a>
 <h3>Информация о туре</h3>
-  <p th:text="'Наименование: ' + ${tour.getTitle()}"></p>
-  <p th:text="'Цена: ' + ${tour.getPrice()}"></p>
-  <p th:text="'Описание: ' + ${tour.getDescription()}"></p>
-  <p th:text="'Туроператор: ' + ${tour.getAgency()}"></p>
-  <p th:text="'Направление: ' + ${tour.getLocation().getName()}"></p>
+<p th:text="'Наименование: ' + ${tour.getTitle()}"></p>
+<p th:text="'Цена: ' + ${tour.getPrice()}"></p>
+<p th:text="'Описание: ' + ${tour.getDescription()}"></p>
+<p th:text="'Туроператор: ' + ${tour.getAgency()}"></p>
+<p th:text="'Направление: ' + ${tour.getLocation().getName()}"></p>
 <div th:each="img : ${tour.getImageList()}">
-  <img width="600px" height="450px" th:src="'/img/' + ${img.getFileName()}" width="300px">
+  <img width="600px" height="450px" th:src="'/img/' + ${img.getFileName()}">
+</div>
+<hr>
+
 </div>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <h3>Список зарегистрированных пользователей</h3>
 <div th:each="element: ${persons}">
     <a th:href="@{/admin/person/edit/{id}(id=${element
-    .getId()})}" th:text="${element.getLogin()}"></a>
+    .getId()})}" th:text="'Имя пользователя: ' + ${element.getLogin()}"></a>
     <p th:text="'ID пользователя: ' + ${element.getId()}"></p>
     <p th:text="'Роль пользователя: ' + ${element.getRole()}"></p>
     <hr>

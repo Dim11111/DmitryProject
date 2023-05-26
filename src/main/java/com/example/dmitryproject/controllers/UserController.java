@@ -74,7 +74,7 @@ public class UserController {
                 return "/registration";
             }
             personService.register(person);
-            return "user/user";
+            return "redirect:/user/tours";
         }
 
         @GetMapping("/user/tours")
@@ -102,12 +102,12 @@ public class UserController {
             if(!price.isEmpty()){//Если радиокнопка сортировки ("по возрастанию цены"/по "убыванию цены") не пустая
                 if(price.equals("sorted_by_ascending_price")) {//если выбрано значение "сортировка по возрастанию цены
                     if (!location.isEmpty()) {//Если радиокнопка "Направление тура" не пустое значение
-                        if (location.equals("Altai")) {//Если выбрана категория Алтай(id=1, смотрим id по БД категорий), то:
+                        if (location.equals("Алтай")) {//Если выбрана категория Алтай(id=1, смотрим id по БД категорий), то:
                             //Кладем в модель "search_product" и в качестве значения кладем туда то, что возвращает соответствующий метод(в метод передаём то, что пришло с формы, дополнительно поисковый запрос приводим к нижнему регистру, значения полей Цена "От"/"До" приводим ко флоат
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 1));
-                        } else if (location.equals("Karelia")) {
+                        } else if (location.equals("Карелия")) {
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 2));
-                        } else if (location.equals("Crimea")) {
+                        } else if (location.equals("Крым")) {
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 3));
                         }
                     } else { //Если категория товара не выбрана, то вызываем соответствующий метод для поиска по наименованию и сортировке по возрастанию цены
@@ -117,11 +117,11 @@ public class UserController {
                 } else if(price.equals("sorted_by_descending_price")){
                     if(!location.isEmpty()){
                         System.out.println(location);
-                        if(location.equals("Altai")){
+                        if(location.equals("Алтай")){
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 1));
-                        }else if (location.equals("Karelia")) {
+                        }else if (location.equals("Карелия")) {
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 2));
-                        } else if (location.equals("Crimea")) {
+                        } else if (location.equals("Крым")) {
                             model.addAttribute("search_product", tourRepository.findByTitleAndLocationOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(on), Float.parseFloat(off), 3));
                         }
                     }  else {

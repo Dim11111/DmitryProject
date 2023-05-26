@@ -6,6 +6,7 @@
 </head>
 <body>
 <h3>Заказы</h3>
+<a href="/user/tours">Возврат к списку туров</a>
 <div th:each="order : ${orders}">
   <h3 th:text="'Заказ № ' + ${order.getNumber()}"></h3>
   <img th:src="'/img/' + ${order.getTour().getImageList()[0].getFileName()}" width="300px">
@@ -17,6 +18,6 @@
 
 
 </div>
-<a href="/user">Возврат к списку туров</a>
+
 </body>
 </html>

@@ -2,71 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Список товаров</title>
+    <title>Главная страница пользователя</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная страница пользователя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+
 </head>
 <body>
-<h1>Добро пожаловать!</h1>
-<h3>Найти свой тур</h3>
+
+<div class="fixed">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ТурON</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/guest/tour/3">Алтай</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/guest/tour/2">Карелия</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=/guest/tour/1>Крым</a>
+                </li>
+            </ul>
+        </div>
+        <a class="btn btn-primary" href="/gue" role="button">Войти</a>
+    </div>
+</nav>
+
+<!--<h3>Наши горячие предложения: </h3>-->
+<!--<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">-->
+<!--    <div class="carousel-inner">-->
+<!--        <div class="carousel-item active" data-bs-interval="3000">-->
+<!--            <div>-->
+<!--                <img th:src="'/img/' + ${tour1.imageList[1].getFileName()}" width="400px">-->
+<!--                <br>-->
+<!--                <a th:href="@{/guest/tour/1}" th:text="${tour1.getTitle()}"></a>-->
+<!--                <p th:text="${tour1.getDescription()}"></p>-->
+<!--                <p th:text="'Цена: ' + ${tour1.getPrice()}"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="carousel-item" data-bs-interval="3000">-->
+<!--            <div>-->
+<!--                <img th:src="'/img/' + ${tour2.imageList[1].getFileName()}" width="400px">-->
+<!--                <br>-->
+<!--                <a th:href="@{/guest/tour/2}" th:text="${tour2.getTitle()}"></a>-->
+<!--                <p th:text="${tour2.getDescription()}"></p>-->
+<!--                <p th:text="'Цена: ' + ${tour2.getPrice()}"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="carousel-item" data-bs-interval="3000">-->
+<!--            <div>-->
+<!--                <img th:src="'/img/' + ${tour3.imageList[1].getFileName()}" width="400px">-->
+<!--                <br>-->
+<!--                <a th:href="@{/guest/tour/3}" th:text="${tour3.getTitle()}"></a>-->
+<!--                <p th:text="${tour3.getDescription()}"></p>-->
+<!--                <p th:text="'Цена: ' + ${tour3.getPrice()}"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">-->
+<!--        <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--        <span class="visually-hidden">Previous</span>-->
+<!--    </button>-->
+<!--    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">-->
+<!--        <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--        <span class="visually-hidden">Next</span>-->
+<!--    </button>-->
+<!--</div>-->
+
+
 <!--В name указываем имя, по которому контроллер будет принимать введенные значения с поля-->
 <form th:method="POST" th:action="@{/guest/search}">
     <fieldset>
-        <legend>Выберите параметры своего тура</legend>
+        <legend>Найдите тур мечты прямо сейчас: </legend>
         <br>
-        <label for="search">Поиск по наименованию: </label>
+        <label for="search">Найти по наименованию: </label>
         <input type="text" id="search" name="search" th:value="*{value_search}">
         <br>
-        <p>Цена: </p>
-        <label for="on">От</label>
+        <br>
+        <label for="on">Цена от</label>
         <input type="text" id="on" name="on" th:value="*{value_price_on}">
-        <label for="off">До</label>
+        <label for="off">до</label>
         <input type="text" id="off" name="off" th:value="*{value_price_off}">
         <br>
-        <br>
+
         <div>
             <!--  Отправляем по ключу value полученное с формы значение на контроллер и обрабатываем его там-->
             <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
-            <label for="ascending_price">Упорядочить по возрастанию цены</label>
+            <label for="ascending_price">по возрастанию</label>
             <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
-            <label for="descending_price">Упорядочить по убыванию цены</label>
-            <p>Направление путешествия: </p>
-            <input type="radio" id="altai" name="location" value="Altai">
+            <label for="descending_price">по убыванию (сортировка по цене)</label>
+            <br>
+            <input type="radio" id="altai" name="location" value="Алтай">
             <label for="altai">Алтай</label>
-            <input type="radio" id="karelia" name="location" value="Karelia">
+            <input type="radio" id="karelia" name="location" value="Карелия">
             <label for="karelia">Карелия</label>
-            <input type="radio" id="crimea" name="location" value="Crimea">
-            <label for="crimea">Крым</label>
+            <input type="radio" id="crimea" name="location" value="Крым">
+            <label for="crimea">Крым (выбор направления)</label>
+
             <br>
-            <br>
-            <input type="submit" value="Найти">
+            <button type="submit" class="btn btn-light">Найти</button>
+
         </div>
     </fieldset>
 </form>
+</div>
 <hr>
 
-<h3>Результат поиска: </h3>
+
+<h3 class="indent">Результат поиска: </h3>
+<div class="search">
 <!--Тут мы принимаем {search_product}, который приходит к нам из метода productSearch продуктКонтроллера, который обрабатывает поисковый запрос-->
-<div th:each="element : ${search_product}">
+<div class="search1" th:each="element : ${search_product}">
     <!--Изображение по ссылке /img/названиеФото, где заместо /img/ подставиться значение, указанное в классе Config
         (там указано, что если встречается путь "/img/, то вместо него подставляем "file:///"+uploadPath+"/",
         а после слэша будет название первой фотографии в листе фотографий данного товара-->
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <img class="imgsearch" th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
     <br>
-    <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+    <a th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
     <p th:text="'Цена: ' + ${element.getPrice()}"></p>
     <hr>
 </div>
+</div>
 <hr>
 
-<h3>Доступные туры</h3>
+<div class="content">
+<h3>Список туров: </h3>
 <div th:each="element : ${tours}">
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <div class="container">
+    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="400px">
     <br>
-    <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
-    <p th:text="'Цена: ' + ${element.getPrice()}"></p>
-    <a th:href="@{/basket/add/{id}(id=${element.getId()})}">Выбрать этот тур</a>
+    <div class="container1">
+    <a class="con" th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+    <p class="con" th:text="${element.getDescription()}"></p>
+    <p class="con" th:text="'Цена: ' + ${element.getPrice()}"></p>
+    </div>
+    </div>
     <hr>
 </div>
-<hr>
 
+<hr>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </body>
 </html>
