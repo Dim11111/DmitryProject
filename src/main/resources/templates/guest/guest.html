@@ -14,7 +14,7 @@
 <div class="fixed">
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">ТурON</a>
+        <a class="navbar-brand" href="/guest/tours">ТурON</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,47 +35,6 @@
         <a class="btn btn-primary" href="/gue" role="button">Войти</a>
     </div>
 </nav>
-
-<!--<h3>Наши горячие предложения: </h3>-->
-<!--<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">-->
-<!--    <div class="carousel-inner">-->
-<!--        <div class="carousel-item active" data-bs-interval="3000">-->
-<!--            <div>-->
-<!--                <img th:src="'/img/' + ${tour1.imageList[1].getFileName()}" width="400px">-->
-<!--                <br>-->
-<!--                <a th:href="@{/guest/tour/1}" th:text="${tour1.getTitle()}"></a>-->
-<!--                <p th:text="${tour1.getDescription()}"></p>-->
-<!--                <p th:text="'Цена: ' + ${tour1.getPrice()}"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="carousel-item" data-bs-interval="3000">-->
-<!--            <div>-->
-<!--                <img th:src="'/img/' + ${tour2.imageList[1].getFileName()}" width="400px">-->
-<!--                <br>-->
-<!--                <a th:href="@{/guest/tour/2}" th:text="${tour2.getTitle()}"></a>-->
-<!--                <p th:text="${tour2.getDescription()}"></p>-->
-<!--                <p th:text="'Цена: ' + ${tour2.getPrice()}"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="carousel-item" data-bs-interval="3000">-->
-<!--            <div>-->
-<!--                <img th:src="'/img/' + ${tour3.imageList[1].getFileName()}" width="400px">-->
-<!--                <br>-->
-<!--                <a th:href="@{/guest/tour/3}" th:text="${tour3.getTitle()}"></a>-->
-<!--                <p th:text="${tour3.getDescription()}"></p>-->
-<!--                <p th:text="'Цена: ' + ${tour3.getPrice()}"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">-->
-<!--        <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--        <span class="visually-hidden">Previous</span>-->
-<!--    </button>-->
-<!--    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">-->
-<!--        <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--        <span class="visually-hidden">Next</span>-->
-<!--    </button>-->
-<!--</div>-->
 
 
 <!--В name указываем имя, по которому контроллер будет принимать введенные значения с поля-->
@@ -124,7 +83,7 @@
     <!--Изображение по ссылке /img/названиеФото, где заместо /img/ подставиться значение, указанное в классе Config
         (там указано, что если встречается путь "/img/, то вместо него подставляем "file:///"+uploadPath+"/",
         а после слэша будет название первой фотографии в листе фотографий данного товара-->
-    <img class="imgsearch" th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
+    <img class="imgsearch" th:src="'/img/' + ${element.imageList[1].getFileName()}" width="300px">
     <br>
     <a th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
     <p th:text="'Цена: ' + ${element.getPrice()}"></p>
@@ -134,10 +93,11 @@
 <hr>
 
 <div class="content">
+
 <h3>Список туров: </h3>
 <div th:each="element : ${tours}">
     <div class="container">
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="400px">
+    <img class="imgtours" th:src="'/img/' + ${element.imageList[2].getFileName()}" width="400px">
     <br>
     <div class="container1">
     <a class="con" th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
@@ -151,6 +111,66 @@
 <hr>
 </div>
 
+<footer class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="blue">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ТурON</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/3">Алтай</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/tour/2">Карелия</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=/user/tour/1>Крым</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=/user/tour/1>Крым</a>
+                </li>
+                <li class="nav-item">
+                    <pre>                                                                                                                          Copyright © All rights reserved. Все права защищены.</pre>
+                </li>
+            </ul>
+    </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+<!--        <div class="slider">-->
+<!--            <h3>Наши горячие предложения: </h3>-->
+<!--            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">-->
+<!--                <div class="carousel-inner">-->
+<!--                    <div class="carousel-item active" data-bs-interval="4000">-->
+<!--                        <div>-->
+<!--                            <img class="sl" th:src="@{/img/baid1.png}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item" data-bs-interval="4000">-->
+<!--                        <div>-->
+<!--                            <img class="sl" th:src="@{/img/baid1.png}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="carousel-item" data-bs-interval="4000">-->
+<!--                        <div>-->
+<!--                            <img class="sl" th:src="@{/img/baid1.png}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">-->
+<!--                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                    <span class="visually-hidden">Previous</span>-->
+<!--                </button>-->
+<!--                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">-->
+<!--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                    <span class="visually-hidden">Next</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->

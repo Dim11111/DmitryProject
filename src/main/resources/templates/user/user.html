@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+<div class="fixed">
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">ТурON</a>
@@ -81,33 +82,42 @@
 
         </div>
     </fieldset>
+</div>
 </form>
 <hr>
-<div class="content">
-<h3>Результат поиска: </h3>
-<!--Тут мы принимаем {search_product}, который приходит к нам из метода productSearch продуктКонтроллера, который обрабатывает поисковый запрос-->
-<div th:each="element : ${search_product}">
-    <!--Изображение по ссылке /img/названиеФото, где заместо /img/ подставиться значение, указанное в классе Config
-        (там указано, что если встречается путь "/img/, то вместо него подставляем "file:///"+uploadPath+"/",
-        а после слэша будет название первой фотографии в листе фотографий данного товара-->
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="300px">
-    <br>
-    <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
-    <p th:text="'Цена: ' + ${element.getPrice()}"></p>
-    <hr>
+<h3 class="indent">Результат поиска: </h3>
+<div class="search">
+    <!--Тут мы принимаем {search_product}, который приходит к нам из метода productSearch продуктКонтроллера, который обрабатывает поисковый запрос-->
+    <div class="search1" th:each="element : ${search_product}">
+        <!--Изображение по ссылке /img/названиеФото, где заместо /img/ подставиться значение, указанное в классе Config
+            (там указано, что если встречается путь "/img/, то вместо него подставляем "file:///"+uploadPath+"/",
+            а после слэша будет название первой фотографии в листе фотографий данного товара-->
+        <img class="imgsearch" th:src="'/img/' + ${element.imageList[1].getFileName()}" width="300px">
+        <br>
+        <a th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+        <p th:text="'Цена: ' + ${element.getPrice()}"></p>
+        <hr>
+    </div>
 </div>
 <hr>
 
-<h3>Список туров:</h3>
-<div th:each="element : ${tours}">
-    <img th:src="'/img/' + ${element.imageList[0].getFileName()}" width="400px">
-    <br>
-    <a th:href="@{/user/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
-    <p th:text="${element.getDescription()}"></p>
-    <p th:text="'Цена: ' + ${element.getPrice()}"></p>
-    <a th:href="@{/basket/add/{id}(id=${element.getId()})}">Выбрать этот тур</a>
+<div class="content">
+
+    <h3>Список туров: </h3>
+    <div th:each="element : ${tours}">
+        <div class="container">
+            <img class="imgtours" th:src="'/img/' + ${element.imageList[2].getFileName()}" width="400px">
+            <br>
+            <div class="container1">
+                <a class="con" th:href="@{/guest/tour/{id}(id=${element.getId()})}" th:text="${element.getTitle()}"></a>
+                <p class="con" th:text="${element.getDescription()}"></p>
+                <p class="con" th:text="'Цена: ' + ${element.getPrice()}"></p>
+            </div>
+        </div>
+        <hr>
+    </div>
+
     <hr>
-</div>
 </div>
 
 
